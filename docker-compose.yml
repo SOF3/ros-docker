@@ -1,0 +1,20 @@
+version: "2.2"
+services:
+  core:
+    image: m2/core
+    ports:
+      - 22911:11311
+  talker:
+    build: talker
+    command: talker talker.py
+    environment:
+      ROS_MASTER_URI: http://core:11311
+    links:
+      - core:core
+  reader:
+    build: reader
+    command: reader reader.py
+    environment:
+      ROS_MASTER_URI: http://core:11311
+    links:
+      - core:core
